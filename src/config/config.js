@@ -5,7 +5,7 @@ module.exports = {
     username: process.env.DB_USERNAME || "root",
     password: process.env.DB_PASSWORD || "secret",
     database: process.env.DB_DATABASE || "movie_api",
-    host: process.env.DB_HOST || "hn-fornix-testing-bigdata-5",
+    host: process.env.DB_HOST || "10.110.69.14",
     port: process.env.PORT || "3301",
     dialect: process.env.DB_DIALECT || "mysql",
   },
