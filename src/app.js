@@ -9,6 +9,7 @@ const cookieParser = require("cookie-parser");
 const db = require("./models");
 
 const app = express();
+
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb" }));
 const port = process.env.APPPORT;
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 routes(app);
+
 db.sequelize
   .authenticate()
   .then(() => {
