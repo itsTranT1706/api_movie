@@ -13,7 +13,9 @@ const commentRouter = require("./comment");
 
 const routes = (app) =>{
     app.use("/auth", authRouter);
-
+    app.get("/webhook", (req, res)=> {
+        console.log(req.params);
+    })
     // app.use("/movie", movieRouter);
 
     app.use("/comment", commentRouter);
