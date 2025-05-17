@@ -3,12 +3,13 @@ const router = express.Router();
 
 const movieController = require("../controllers/movieController");
 
+router.get("/phim-moi-nhat", movieController.getMovieUpdated);
+router.get("/:type", movieController.getMovieByType);
+router.get("/quoc-gia/:country", movieController.getMovieByCate);
+router.get("/the-loai/:category", movieController.getMovieByCate);
+router.get("/nam/:year", movieController.getMovieByCate);
+router.get("/tim-kiem", movieController.searchMovies);
+router.get("/phim/:slug", movieController.getMovieDetail);
 
-router.get("/tim-kiem", movieController.searchMovie);
-router.get("/danh-sach", movieController.getListMovie);
-router.get("/chi-tiet-phim", movieController.getDetailMovie);
-router.get("/loc", movieController.filterMovie);
-router.get("the-loai", movieController.getListCate);
-router.get("/quoc-gia", movieController.getListCountry);
 
 module.exports = router;

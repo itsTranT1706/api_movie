@@ -4,7 +4,7 @@ const create = async (data) => {
 //   return await comments.create(data);
   return {
     status: "OK",
-    message: "Login successful!",
+    message: "Comment successful!",
     data: await comments.create(data)
 };
 };

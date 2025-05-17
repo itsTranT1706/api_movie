@@ -8,15 +8,14 @@ const commentRouter = require("./comment");
 // const favouriteRouter = require("./favourite");
 
 // const recommendRouter = require("./recommend");
-// const feedbackRouter = require("./feedback");
-
+const movieRouter = require("./movie");
 
 const routes = (app) =>{
-    app.use("/auth", authRouter);
+    app.use("/api/auth", authRouter);
 
     // app.use("/movie", movieRouter);
 
-    app.use("/comment", commentRouter);
+    app.use("/api/comment", commentRouter);
 
     // app.use("rating", ratingRouter);
 
@@ -26,7 +25,9 @@ const routes = (app) =>{
 
     // app.use("/recommend", recommendRouter);
 
-    // app.use("/feedback", feedbackRouter);
+    app.use("/api/movies", movieRouter);
+
+    // app.use("/cast", feedbackRouter);
 
 }
 
