@@ -48,7 +48,7 @@ const authUserMiddleWare = (req, res, next) => {
             })
 
         }
-        if (decoded?.id === userId || decoded?.id ===2 ) {
+        if (decoded?.id === userId || decoded?.id === 2 ) {
             next();
         }
         else {

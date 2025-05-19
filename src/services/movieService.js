@@ -1,4 +1,4 @@
-const api = require("../untils/apiClient");
+const {api, tmdb} = require("../untils/apiClient");
 // const filterParams = `sort_field=${sort_field}&sort_lang=${sort_lang}&category=${category}&country=${country}&year=${year}&limit=${limit}`
 class MovieService {
     
@@ -41,7 +41,18 @@ class MovieService {
    async getMovieDetail(slug) {
     try {
         const res = await api.get(`/phim/${slug}`);
+        // const bonus = await tmdb.get(/)
         return res.data;
+      } catch (error) {
+        throw new Error('Không thể lấy chi tiết phim');
+      }
+   };
+
+   async getCredits(movieId) {
+    try {
+        const res = await tmdb.get(`/movie/${movieId}/credits`);
+        // const bonus = await tmdb.get(/)
+        return res.data.cast;
       } catch (error) {
         throw new Error('Không thể lấy chi tiết phim');
       }

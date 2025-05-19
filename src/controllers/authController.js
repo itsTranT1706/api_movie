@@ -18,9 +18,8 @@ const register = async (req, res) => {
       });
     }
    
-    // Giả sử UserService.register trả về dữ liệu người dùng mới đã được tạo
     const response = await UserService.register(req.body);
-    return res.status(201).json(response); // Trả về status 201 cho yêu cầu thành công khi tạo người dùng
+    return res.status(201).json(response);
   } catch (e) {
     return res.status(500).json({
       message: e.message || "Server error",

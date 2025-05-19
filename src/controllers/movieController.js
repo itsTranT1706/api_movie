@@ -37,7 +37,7 @@ class MovieController {
     
        async getMovieByCate(req, res) {
         try {
-            const { cate } = req.query;
+            const { cate } = req.params;
             if (!cate) return res.status(400).json({ error: 'không có quốc gia hoặc thể loại hoặc năm này' });
         
             const data = await movieService.getMovieByType(cate);
@@ -74,6 +74,24 @@ class MovieController {
             if (!slug) return res.status(400).json({ error: 'Thiếu slug phim' });
         
             const data = await movieService.getMovieDetail(slug);
+            res.json({
+                success: true,
+                data: data
+            });
+          } catch (err) {
+            res.status(500).json({ 
+                success: false,
+                error: err.message
+             });
+          }
+       };
+
+       async getCredits(req, res) {
+        try {
+            const { movieId } = req.params;
+            if (!movieId) return res.status(400).json({ error: 'không tìm thấy id phim' });
+        
+            const data = await movieService.getCredits(movieId);
             res.json({
                 success: true,
                 data: data

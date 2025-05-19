@@ -6,7 +6,7 @@ const { authUserMiddleWare } = require("../middleWare/authMiddleWare.js");
 
 
 router.post("/" ,authUserMiddleWare, commentController.createComment);
-
+router.delete("/:comment_id", commentController.deleteComment);
 router.get("/:movie_id", commentController.getCommentsByMovie);
 router.get("/replyList/:parent_id", commentController.getReplies);
 

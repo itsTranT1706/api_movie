@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actor Filmography Timeline</title>
+    <style>
+        :root {
+            --bg-color: #0f1117;
+            --bg-secondary: #1a1d26;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --accent: #ff3b69;
+            --accent-secondary: #7d5fff;
+            --card-bg: #1f2130;
+            --timeline-line: #2d3040;
+            --animation-time: 0.3s;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .actor-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .actor-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+        }
+        
+        .actor-details {
+            flex: 1;
+        }
+        
+        .actor-name {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .actor-bio {
+            color: var(--text-secondary);
+            max-width: 600px;
+        }
+        
+        .filter-controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+        
+        .filter-btn {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all var(--animation-time) ease;
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover {
+            background-color: var(--card-bg);
+            transform: translateY(-2px);
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(to right, var(--accent), var(--accent-secondary));
+            color: white;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--timeline-line);
+        }
+        
+        .year-section {
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .year-marker {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .year-marker::before {
+            content: '';
+            position: absolute;
+            left: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(to right, var(--accent), var(--accent-secondary));
+            box-shadow: 0 0 10px var(--accent);
+        }
+        
+        .year-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .movie-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform var(--animation-time) ease, box-shadow var(--animation-time) ease;
+        }
+        
+        .movie-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .movie-poster {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .movie-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .movie-card:hover .movie-poster img {
+            transform: scale(1.05);
+        }
+        
+        .movie-info {
+            padding: 1.2rem;
+        }
+        
+        .movie-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        
+        .movie-original-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+            font-style: italic;
+        }
+        
+        .movie-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .movie-year {
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .tag {
+            background: rgba(125, 95, 255, 0.2);
+            color: var(--accent-secondary);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .tag.age-rating {
+            background: rgba(255, 59, 105, 0.2);
+            color: var(--accent);
+        }
+        
+        @media (max-width: 768px) {
+            .actor-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .timeline {
+                padding-left: 30px;
+            }
+            
+            .year-marker::before {
+                left: -30px;
+                width: 16px;
+                height: 16px;
+            }
+            
+            .movie-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .movie-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Loading animation */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid var(--timeline-line);
+            border-top-color: var(--accent);
+            animation: spin 1s infinite linear;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Actor Filmography Timeline</h1>
+        </header>
+        
+        <div class="actor-info">
+            <img src="/api/placeholder/400/400" alt="Actor Photo" class="actor-image">
+            <div class="actor-details">
+                <h2 class="actor-name">Tom Hardy</h2>
+                <p class="actor-bio">British actor known for versatile roles in blockbuster films and independent projects. Has received critical acclaim for intense character portrayals and physical transformations.</p>
+            </div>
+        </div>
+        
+        <div class="filter-controls">
+            <button class="filter-btn active" data-filter="all">All Films</button>
+            <button class="filter-btn" data-filter="latest">Latest First</button>
+            <button class="filter-btn" data-filter="oldest">Oldest First</button>
+        </div>
+        
+        <div class="timeline">
+            <!-- Content will be populated by JavaScript -->
+            <div class="loading">
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data for demonstration
+        const filmographyData = [
+            {
+                year: 2023,
+                movies: [
+                    {
+                        title: "Venom: The Last Dance",
+                        originalTitle: "Venom: The Last Dance",
+                        poster: "https://phimimg.com/upload/vod/20250513-1/7c40c5e1c5f88fdff52d54b03d084497.jpg",
+                        year: 2023,
+                        tags: ["Action", "Sci-Fi", "PG-13"]
+                    }
+                ]
+            },
+            
+            {
+                year: 2021,
+                movies: [
+                    {
+                        title: "Venom: Let There Be Carnage",
+                        originalTitle: "Venom: Let There Be Carnage",
+                        poster: "https://phimimg.com/upload/vod/20250513-1/7c40c5e1c5f88fdff52d54b03d084497.jpg",
+                        year: 2021,
+                        tags: ["Action", "Sci-Fi", "PG-13"]
+                    }
+                ]
+            },
+            {
+                year: 2020,
+                movies: [
+                    {
+                        title: "Capone",
+                        originalTitle: "Capone",
+                        poster: "https://phimimg.com/upload/vod/20250513-1/7c40c5e1c5f88fdff52d54b03d084497.jpg",
+                        year: 2020,
+                        tags: ["Biography", "Crime", "R"]
+                    }
+                ]
+            },
+            {
+                year: 2018,
+                movies: [
+                    {
+                        title: "Venom",
+                        originalTitle: "Venom",
+                        poster: "https://phimimg.com/upload/vod/20250513-1/7c40c5e1c5f88fdff52d54b03d084497.jpg",
+                        year: 2018,
+                        tags: ["Action", "Sci-Fi", "PG-13"]
+                    }
+                ]
+            },
+            {
+                year: 2017,
+                movies: [
+                    {
+                        title: "Dunkirk",
+                        originalTitle: "Dunkirk",
+                        poster: "https://phimimg.com/upload/vod/20250513-1/7c40c5e1c5f88fdff52d54b03d084497.jpg",
+                        year: 2017,
+                        tags: ["Action", "Drama", "PG-13"]
+                    }
+                ]
+            },
+            {
+                year: 2015,
+                movies: [
+                    {
+                        title: "Mad Max: Fury Road",
+                        originalTitle: "Mad Max: Fury Road",
+                        poster: "https://phimimg.com/upload/vod/20250513-1/7c40c5e1c5f88fdff52d54b03d084497.jpg",
+                        year: 2015,
+                        tags: ["Action", "Adventure", "R"]
+                    },
+                    {
+                        title: "The Revenant",
+                        originalTitle: "The Revenant",
+                        poster: "https://phimimg.com/upload/vod/20250513-1/7c40c5e1c5f88fdff52d54b03d084497.jpg",
+                        year: 2015,
+                        tags: ["Adventure", "Drama", "R"]
+                    },
+                    {
+                        title: "Legend",
+                        originalTitle: "Legend",
+                        poster: "https://phimimg.com/upload/vod/20250513-1/7c40c5e1c5f88fdff52d54b03d084497.jpg",
+                        year: 2015,
+                        tags: ["Biography", "Crime", "R"]
+                    }
+                ]
+            },
+            {
+                year: 2014,
+                movies: [
+                    {
+                        title: "Locke",
+                        originalTitle: "Locke",
+                        poster: "https://phimimg.com/upload/vod/20250513-1/7c40c5e1c5f88fdff52d54b03d084497.jpg",
+                        year: 2014,
+                        tags: ["Drama", "R"]
+                    }
+                ]
+            },
+            {
+                year: 2012,
+                movies: [
+                    {
+                        title: "The Dark Knight Rises",
+                        originalTitle: "The Dark Knight Rises",
+                        poster: "https://phimimg.com/upload/vod/20250513-1/7c40c5e1c5f88fdff52d54b03d084497.jpg",
+                        year: 2012,
+                        tags: ["Action", "Thriller", "PG-13"]
+                    },
+                    {
+                        title: "Lawless",
+                        originalTitle: "Lawless",
+                        poster: "https://phimimg.com/upload/vod/20250513-1/7c40c5e1c5f88fdff52d54b03d084497.jpg",
+                        year: 2012,
+                        tags: ["Crime", "Drama", "R"]
+                    }
+                ]
+            },
+            {
+                year: 2010,
+                movies: [
+                    {
+                        title: "Inception",
+                        originalTitle: "Inception",
+                        poster: "https://phimimg.com/upload/vod/20250513-1/7c40c5e1c5f88fdff52d54b03d084497.jpg",
+                        year: 2010,
+                        tags: ["Action", "Sci-Fi", "PG-13"]
+                    }
+                ]
+            }
+        ];
+
+        // DOM Elements
+        const timelineContainer = document.querySelector('.timeline');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        // Initialize the timeline
+        function initTimeline() {
+            // Remove loading spinner
+            timelineContainer.innerHTML = '';
+            
+            // Clone data for manipulation
+            let data = JSON.parse(JSON.stringify(filmographyData));
+            
+            // Sort by year (descending by default)
+            renderTimeline(data);
+            
+            // Set up event listeners for filter buttons
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Update active state
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Get filter type
+                    const filterType = this.dataset.filter;
+                    filterTimeline(filterType);
+                });
+            });
+        }
+        
+        // Filter timeline based on selected option
+        function filterTimeline(filterType) {
+            // Clone data for manipulation
+            let data = JSON.parse(JSON.stringify(filmographyData));
+            
+            // Sort based on filter type
+            switch(filterType) {
+                case 'latest':
+                    data.sort((a, b) => b.year - a.year);
+                    break;
+                case 'oldest':
+                    data.sort((a, b) => a.year - b.year);
+                    break;
+                default:
+                    data.sort((a, b) => b.year - a.year); // Default to latest first
+            }
+            
+            renderTimeline(data);
+        }
+        
+        // Render timeline with provided data
+        function renderTimeline(data) {
+            timelineContainer.innerHTML = '';
+            
+            if (data.length === 0) {
+                timelineContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📽️</div>
+                        <h3>No films found</h3>
+                        <p>Try adjusting your filters or check back later.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Create year sections
+            data.forEach((yearData, index) => {
+                const yearSection = document.createElement('div');
+                yearSection.className = 'year-section';
+                yearSection.style.animationDelay = `${index * 0.1}s`;
+                
+                const yearMarker = document.createElement('div');
+                yearMarker.className = 'year-marker';
+                yearMarker.innerHTML = `<h2 class="year-title">${yearData.year}</h2>`;
+                
+                const movieGrid = document.createElement('div');
+                movieGrid.className = 'movie-grid';
+                
+                // Add movie cards
+                yearData.movies.forEach(movie => {
+                    const movieCard = createMovieCard(movie);
+                    movieGrid.appendChild(movieCard);
+                });
+                
+                yearSection.appendChild(yearMarker);
+                yearSection.appendChild(movieGrid);
+                timelineContainer.appendChild(yearSection);
+            });
+        }
+        
+        // Create a movie card element
+        function createMovieCard(movie) {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+            
+            // Prepare tag HTML
+            let tagsHTML = '';
+            movie.tags.forEach(tag => {
+                const isAgeRating = tag.includes('PG') || tag.includes('R') || tag === 'G';
+                tagsHTML += `<span class="tag ${isAgeRating ? 'age-rating' : ''}">${tag}</span>`;
+            });
+            
+            card.innerHTML = `
+                <div class="movie-poster">
+                    <img src="${movie.poster}" alt="${movie.title} poster">
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">${movie.title}</h3>
+                    ${movie.originalTitle !== movie.title ? 
+                        `<p class="movie-original-title">${movie.originalTitle}</p>` : ''}
+                    <div class="movie-meta">
+                        <span class="movie-year">${movie.year}</span>
+                    </div>
+                    <div class="tags">
+                        ${tagsHTML}
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        // Initialize after a small delay to show the loading animation
+        setTimeout(initTimeline, 800);
+    </script>
+</body>
+</html>

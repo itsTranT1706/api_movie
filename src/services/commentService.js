@@ -1,13 +1,35 @@
 const { comments, users } = require('../models');
 
 const create = async (data) => {
-//   return await comments.create(data);
   return {
     status: "OK",
     message: "Comment successful!",
     data: await comments.create(data)
+  };
+
 };
+
+const deleteCmt = async (id) => {
+  try {
+    const checkCmt = await comments.findOne({ where: { id } });
+    if (!checkCmt) {
+      return {
+        status: "ERR",
+        message: "Comment not found!",
+      };
+    }
+
+    await comments.destroy({ where: { id } });
+
+    return {
+      status: "OK",
+      message: "Delete comment successful!",
+    };
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
+
 
 const getByMovieId = async (movie_id) => {
   return await comments.findAll({
@@ -36,6 +58,7 @@ const getReplies = async (parent_id) => {
 
 module.exports = {
   create,
+  deleteCmt,
   getByMovieId,
   getReplies
 };

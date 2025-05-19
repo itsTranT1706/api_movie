@@ -10,6 +10,8 @@ router.get("/the-loai/:category", movieController.getMovieByCate);
 router.get("/nam/:year", movieController.getMovieByCate);
 router.get("/tim-kiem", movieController.searchMovies);
 router.get("/phim/:slug", movieController.getMovieDetail);
+router.get("/phim/:movieId/credits", movieController.getCredits);
 
+// router.get("/popular", movieController.)
 
 module.exports = router;

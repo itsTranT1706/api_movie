@@ -14,7 +14,6 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb" }));
 
 const port = process.env.APPPORT;
-console.log(port);
 app.use(morgan("dev"));
 app.use(cors());
 app.use(bodyParser.json());

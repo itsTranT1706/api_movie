@@ -1,6 +1,7 @@
 const { users } = require("../models");
 const bcrypt = require("bcrypt");
 const { generalAccessToken, generalRefreshToken } = require("./jwtService");
+// const { getAllUser } = require("../controllers/authController");
 
 const register = async (newUser) => {
     const { username, password, confirmPassword, role } = newUser;
@@ -145,6 +146,18 @@ const updateUser = async (id, data) => {
         throw new Error(error.message);
     }
 };
+const getAllUser = async () => {
+    try {
+      const allUsers = await users.findAll();
+      return {
+        status: "OK",
+        message: "Users information:",
+        data: allUsers,
+      };
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
 
 const changePassword = async (id, oldPassword, newPassword) => {
     try {
@@ -180,4 +193,5 @@ module.exports = {
     getDetailUser,
     updateUser,
     changePassword,
+    getAllUser
 };

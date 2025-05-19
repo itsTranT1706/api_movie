@@ -7,10 +7,10 @@ const {
 
 } = require("../middleWare/authMiddleWare");
 
+router.post("/:id", authUserMiddleWare, favouriteController.addFavourites);
 
-router.post("/", authUserMiddleWare,favouriteController.saveFavouriteMovie);
+router.get("/:id", authUserMiddleWare, favouriteController.getFavourites);
 
-router.get("/", authUserMiddleWare, favouriteController.getFavouriteMovie);
+router.delete("/:id/:movie_id", authUserMiddleWare, favouriteController.deleteFavourites);
 
-router.delete("/:movie-id", authUserMiddleWare, favouriteController.deleteFavouriteMovie);
-
+module.exports = router;
