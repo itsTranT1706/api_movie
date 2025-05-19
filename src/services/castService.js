@@ -1,3 +1,6 @@
+//service gọi api lấy thông tin về diễn viên
+
+
 const { tmdb } = require("../untils/apiClient");
 
 class CastService {
