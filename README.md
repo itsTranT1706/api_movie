@@ -16,61 +16,60 @@ Base URL: `http://localhost:8000/api`
 - **Method**: `POST`
 - **Description**: Đăng nhập và nhận token
 
-> 💡 **Lưu ý**: Với các API yêu cầu xác thực, cần thêm header:
-**Authorization: Bearer <token>
-```
-👤 User APIs
-📄 Get User Details
-Endpoint: /auth/get-detail-user/:id
+> 💡 **Lưu ý**: Với các API yêu cầu xác thực, cần thêm header: Authorization: Bearer <${token}>
 
-Method: GET
+### 👤 User APIs
+#### 📄 Get User Details
+- **Endpoint**:  `/auth/get-detail-user/:id`
 
-Description: Lấy thông tin chi tiết của người dùng
+- **Method**: `GET`
 
-🗑️ Delete User
-Endpoint: /auth/delete-user/:id
+- **Description**: Lấy thông tin chi tiết của người dùng
 
-Method: DELETE
+#### 🗑️ Delete User
+- **Endpoint**: `/auth/delete-user/:id`
 
-Description: Xóa người dùng
+- **Method**: `DELETE`
 
-🔐 Change Password
-Endpoint: /auth/change-password
+- **Description**: Xóa người dùng
 
-Method: PUT
+#### 🔐 Change Password
+- **Endpoint**: `/auth/change-password`
 
-Description: Thay đổi mật khẩu người dùng
+- **Method**: `PUT`
 
-📝 Update User Info
-Endpoint: /auth/update-user
+- **Description**: Thay đổi mật khẩu người dùng
 
-Method: PATCH
+#### 📝 Update User Info
+- **Endpoint**: `/auth/update-user`
 
-Description: Cập nhật thông tin người dùng
+- **Method**: `PATCH`
 
-❤️ Favourite Movies
-➕ Add Favourite Movie
-Endpoint: /favourite/:user_id
+- **Description**: Cập nhật thông tin người dùng
 
-Method: POST
+### ❤️ Favourite Movies
+#### ➕ Add Favourite Movie
+- **Endpoint**: `/favourite/:user_id`
 
-Description: Thêm một bộ phim vào danh sách yêu thích của người dùng
+- **Method**: `POST`
 
-📥 Get Favourite Movies by User
-Endpoint: /favourite/:user_id
+- **Description**: Thêm một bộ phim vào danh sách yêu thích của người dùng
 
-Method: GET
+#### 📥 Get Favourite Movies by User
+- **Endpoint**: `/favourite/:user_id`
 
-Description: Lấy danh sách phim yêu thích của người dùng theo ID
+- **Method**: `GET`
 
-❌ Remove Movie from Favourites
-Endpoint: /favourite/:user_id/:movie_id
+- **Description**: Lấy danh sách phim yêu thích của người dùng theo ID
 
-Method: DELETE
+#### ❌ Remove Movie from Favourites
+- **Endpoint**: `/favourite/:user_id/:movie_id`
 
-Description: Xoá một bộ phim khỏi danh sách yêu thích
+- **Method**: DELETE
 
-📌 Notes
+- **Description**: Xoá một bộ phim khỏi danh sách yêu thích
+
+## 📌 Notes
 Đảm bảo tất cả các request cần xác thực đều có header Authorization.
 
 Response mặc định sẽ trả về định dạng JSON.
