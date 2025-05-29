@@ -1,8 +1,32 @@
 # 🎬 API Movie
 
-Base URL: `http://localhost:8000/api`
+## Introduction
 
----
+- Step 1: `git clone https://github.com/itsTranT1706/api_movie.git`
+- Step 2: `npm install`
+- Step 3: Tạo cơ sở dữ liệu "movie_api"
+- Step 4: Tạo `.env` file và set up: 
+"API_KEY = 
+ACCESS_TOKEN_AUTH = 
+
+DB_USERNAME=
+DB_PASSWORD=
+DB_DATABASE= movie_api
+DB_HOST=
+DB_DIALECT= mysql
+PORT= 
+APPPORT= 8000
+
+ACCESS_TOKEN = access_token 
+REFRESH_TOKEN = refresh_token
+
+base_img = https://image.tmdb.org/t/p/original"
+
+- Step 5: `cd ./src/`
+- Step 6: `npx sequelize-cli db:migrate`
+- Step 7: `npm start`
+
+## Base URL: `http://localhost:8000/api`
 
 ## 🔐 Authentication
 
