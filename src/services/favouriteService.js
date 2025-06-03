@@ -3,7 +3,7 @@ const { favourites, users } = require('../models');
 class Favourite {
     async addFavourite(userId, movieId) {   
         const checkUser = await users.findOne({ where: { id: userId, } });
-        const checkMovie = await favourites.findOne({ where : {user_id :userId, movie_id: movieId}})
+        const checkMovie = await favourites.findOne({ where : {user_id :userId, movie_id: movieId,  slug: slug}})
         if (checkMovie) {
             return {
                 status: "ERR",
@@ -22,7 +22,8 @@ class Favourite {
                 message: "Thêm phim yêu thích thành công",
                 data: await favourites.create({
                     user_id: userId,
-                    movie_id: movieId
+                    movie_id: movieId,
+                    slug: slug
                 })
               };
 

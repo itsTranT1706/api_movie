@@ -19,7 +19,7 @@ class FavouriteController {
     async addFavourites (req, res, next) {
         try {
             const user_id = req.params.id;
-            const {movie_id} = req.body;
+            const {movie_id, slug} = req.body;
             // console.log(req.body);
             if (!user_id) {
               return res
@@ -31,7 +31,7 @@ class FavouriteController {
                 .status(200)
                 .json({ status: "ERR", message: "Movie ID is required!" });
             }
-            const response = await favouriteService.addFavourite(user_id, movie_id);
+            const response = await favouriteService.addFavourite(user_id, movie_id, slug);
             return res.status(200).json(response);
           } catch (error) {
             return res.status(404).json({ message: error.message });
