@@ -1,3 +1,5 @@
+//service gọi api lấy data phim
+
 const {api, tmdb} = require("../untils/apiClient");
 // const filterParams = `sort_field=${sort_field}&sort_lang=${sort_lang}&category=${category}&country=${country}&year=${year}&limit=${limit}`
 class MovieService {

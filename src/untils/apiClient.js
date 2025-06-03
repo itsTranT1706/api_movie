@@ -1,3 +1,6 @@
+// sử dụng api có sẵn để lấy data từ 2 nguồn: nguonc và tmdb
+//nguonc: để lấy phim, tmdb: lấy thông tin về credits and movie credits
+
 const axios  = require("axios");
 const dotenv = require("dotenv");
 dotenv.config();

@@ -1,3 +1,5 @@
+// route các api theo chức năng
+
 const authRouter = require("./auth");
 
 const castRouter = require("./cast");
