@@ -36,7 +36,7 @@ const refreshTokenJwtService = (token) => {
               message: "the authentication",
             });
           }
-          const access_token = await genneralAccessToken({
+          const access_token = await generalAccessToken({
             id: decoded?.id,
             isAdmin: decoded?.isAdmin,
           });

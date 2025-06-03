@@ -15,7 +15,12 @@ app.use(express.urlencoded({ limit: "50mb" }));
 
 const port = process.env.APPPORT;
 app.use(morgan("dev"));
-app.use(cors());
+app.use(cors({
+  origin: 'http://127.0.0.1:5501', // Your frontend origin
+  credentials: true, // Allow cookies to be sent
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 

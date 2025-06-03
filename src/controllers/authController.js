@@ -37,6 +37,7 @@ const loginUser = async (req, res) => {
         message: "username and password is required!",
       });
     }
+
     const response = await UserService.loginUser(req.body);
     const { refresh_token, ...newReponse } = response;
     res.cookie("refresh_token", refresh_token, {
@@ -104,9 +105,11 @@ const updateUser = async (req, res) => {
     return res.status(404).json({ message: e });
   }
 };
+
 const refreshToken = async (req, res) => {
   try {
     const token = req.cookies.refresh_token;
+   
     if (token == null) {
       return res.status(200).json({
         message: "token is required!",
@@ -118,6 +121,7 @@ const refreshToken = async (req, res) => {
     return res.status(200).json({ message: e });
   }
 };
+
 const changePassword = async (req, res) => {
   try {
     const id = req.params.id;
