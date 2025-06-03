@@ -21,6 +21,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      slug: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -33,9 +37,9 @@ module.exports = {
       },
     });
 
-    // Thêm ràng buộc unique để mỗi người dùng chỉ thêm một phim một lần
+    // Thêm ràng buộc unique để mỗi người dùng chỉ thêm một phim một lần với movie_id và slug duy nhất
     await queryInterface.addConstraint('favourites', {
-      fields: ['user_id', 'movie_id'],
+      fields: ['user_id', 'movie_id', 'slug'],
       type: 'unique',
       name: 'unique_favorite_per_user',
     });

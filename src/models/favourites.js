@@ -1,6 +1,5 @@
 'use strict';
 
-
 module.exports = (sequelize, DataTypes) => {
     const favourites = sequelize.define(
       'favourites',
@@ -25,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.STRING,
           allowNull: false,
         },
+        slug: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
         created_at: {
           allowNull: false,
           type: DataTypes.DATE,
@@ -44,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
         indexes: [
           {
             unique: true,
-            fields: ['user_id', 'movie_id'],
+            fields: ['user_id', 'movie_id', 'slug'],
             name: 'unique_favorite_per_user',
           },
         ],
@@ -61,4 +64,4 @@ module.exports = (sequelize, DataTypes) => {
     };
   
     return favourites;
-  };
+};
