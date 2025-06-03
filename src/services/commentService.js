@@ -1,10 +1,12 @@
 const { comments, users } = require('../models');
 
-const create = async (data) => {
+const create = async (user_id, body) => {
+  const newComment = { user_id, ...body } ;
+console.log(newComment)
   return {
     status: "OK",
     message: "Comment successful!",
-    data: await comments.create(data)
+    data: await comments.create(newComment)
   };
 
 };

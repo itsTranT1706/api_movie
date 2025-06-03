@@ -1,6 +1,7 @@
 "use strict";
+
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: async (queryInterface, Sequelize) => {
     return queryInterface.createTable("users", {
       id: {
         allowNull: false,
@@ -13,20 +14,25 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
       password: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: "1", // Mặc định là '1'
+        defaultValue: "1",
       },
       role: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: 1, // Giá trị mặc định là 1
+        defaultValue: 1,
       },
       trang_thai: {
         type: Sequelize.TINYINT,
         allowNull: false,
-        defaultValue: 1, // 1: Hoạt động, 0: Không hoạt động
+        defaultValue: 1,
       },
       createdAt: {
         allowNull: false,
@@ -36,13 +42,12 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal(
-          "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
-        ),
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"),
       },
     });
   },
-  down: (queryInterface, Sequelize) => {
+
+  down: async (queryInterface, Sequelize) => {
     return queryInterface.dropTable("users");
   },
 };

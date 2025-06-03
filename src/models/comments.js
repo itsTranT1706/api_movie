@@ -2,9 +2,10 @@
 module.exports = (sequelize, DataTypes) => {
   const comments = sequelize.define('comments', {
     id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
-      allowNull: false
+      allowNull: false,
     },
     movie_id: {
       type: DataTypes.STRING,

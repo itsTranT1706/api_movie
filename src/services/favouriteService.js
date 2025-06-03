@@ -1,4 +1,3 @@
-const { Where } = require('sequelize/lib/utils');
 const { favourites, users } = require('../models');
 
 class Favourite {
@@ -22,7 +21,6 @@ class Favourite {
                 status: "OK",
                 message: "Thêm phim yêu thích thành công",
                 data: await favourites.create({
-                    // id,
                     user_id: userId,
                     movie_id: movieId
                 })

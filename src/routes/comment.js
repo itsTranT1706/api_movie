@@ -5,9 +5,9 @@ const commentController = require("../controllers/commentController.js");
 const { authUserMiddleWare } = require("../middleWare/authMiddleWare.js");
 
 
-router.post("/" ,authUserMiddleWare, commentController.createComment);
-router.delete("/:comment_id", commentController.deleteComment);
+router.post("/:id/" , authUserMiddleWare, commentController.createComment);
+router.delete("/:id/:comment_id", authUserMiddleWare, commentController.deleteComment);
 router.get("/:movie_id", commentController.getCommentsByMovie);
-router.get("/replyList/:parent_id", commentController.getReplies);
+router.get("/replyList/:parent_id", authUserMiddleWare,  commentController.getReplies);
 
 module.exports = router;

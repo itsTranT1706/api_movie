@@ -18,3 +18,8 @@ api cập nhật thông tin:   (PATCH)
 api: thêm phim yêu thích: /api/favourite/:user_id/  (POST)
 api: lấy phim yêu thích từ người dùng có id : /api/favourite/:user_id (GET)
 api xoá phim có id khỏi danh sách yêu thích:  /api/favourite/:user_id/:movie_id (DELETE)
+
+
+## Role
+1. user
+2. admin

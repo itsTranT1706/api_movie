@@ -2,7 +2,8 @@ const CommentService = require('../services/commentService');
 
 const createComment = async (req, res) => {
   try {
-    const comment = await CommentService.create(req.body);
+    const user_id = req.params.id;
+    const comment = await CommentService.create(user_id, req.body);
     res.status(201).json(comment);
   } catch (err) {
     res.status(500).json({ error: err.message });

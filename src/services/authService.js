@@ -1,10 +1,11 @@
 const { users } = require("../models");
+const { Op } = require('sequelize');
 const bcrypt = require("bcrypt");
 const { generalAccessToken, generalRefreshToken } = require("./jwtService");
 // const { getAllUser } = require("../controllers/authController");
 
 const register = async (newUser) => {
-    const { username, password, confirmPassword, role } = newUser;
+    const { username, email, password, confirmPassword, role } = newUser;
     if (password !== confirmPassword) {
         return {
             status: "ERR",
@@ -13,7 +14,12 @@ const register = async (newUser) => {
     }
 
     try {
-        const checkUser = await users.findOne({ where: { username } });
+        const checkUser = await users.findOne({  where: {
+            [Op.or]: [
+              { username: username },
+              { email: email }
+            ]
+          }});
         if (checkUser) {
             return {
                 status: "ERR",
@@ -23,6 +29,7 @@ const register = async (newUser) => {
         const hash = await bcrypt.hash(password, 10);
         const createdUser = await users.create({
             username,
+            email,
             password: hash,
             role,
         });
@@ -39,9 +46,9 @@ const register = async (newUser) => {
 }
 
 const loginUser = async (user) => {
-    const { username, password } = user;
+    const { email, password } = user;
     try {
-        const checkUser = await users.findOne({ where: { username } });
+        const checkUser = await users.findOne({ where: { email } });
         if (!checkUser) {
             return {
                 status: "ERR",
