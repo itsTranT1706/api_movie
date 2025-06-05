@@ -86,7 +86,7 @@ const getDetailUser = async (req, res) => {
     const response = await UserService.getDetailUser(id);
     return res.status(200).json(response);
   } catch (error) {
-    return res.status(404).json({ message: e });
+    return res.status(404).json({ message: error });
   }
 };
 const updateUser = async (req, res) => {
@@ -102,7 +102,7 @@ const updateUser = async (req, res) => {
     const reponse = await UserService.updateUser(id, data);
     return res.status(200).json(reponse);
   } catch (error) {
-    return res.status(404).json({ message: e });
+    return res.status(404).json({ message: error });
   }
 };
 
@@ -118,7 +118,7 @@ const refreshToken = async (req, res) => {
     const response = await jwtService.refreshTokenJwtService(token);
     return res.status(200).json(response);
   } catch (error) {
-    return res.status(200).json({ message: e });
+    return res.status(200).json({ message: error });
   }
 };
 

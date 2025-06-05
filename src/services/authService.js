@@ -133,15 +133,21 @@ const updateUser = async (id, data) => {
                 message: "User is not defined!",
             };
         }
+        
+        // const user = await users.findByPk(id);
+        // console.log("User:", user);
+
         const rowsUpdated = await users.update(data, {
-            where: { id },
+            where: { id }
         });
+
         if (rowsUpdated[0] === 0) {
             return {
                 status: "ERR",
                 message: "Failed to update user!",
             };
         }
+
         const updatedUser = await users.findOne({ where: { id } });
 
         return {
@@ -149,6 +155,7 @@ const updateUser = async (id, data) => {
             message: "User is updated!",
             data: updatedUser,
         };
+        
     } catch (error) {
         throw new Error(error.message);
     }

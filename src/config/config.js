@@ -8,6 +8,7 @@ module.exports = {
     host: process.env.DB_HOST || "10.110.69.14",
     port: process.env.PORT || "3301",
     dialect: process.env.DB_DIALECT || "mysql",
+
   },
   test: {
     username: "root",
